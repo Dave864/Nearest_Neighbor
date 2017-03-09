@@ -108,7 +108,7 @@ void NNeighbor::NewLook(int *feats)
 //Prints out the current indexes of instances to be ignored
 void NNeighbor::PExclude()
 {
-	std::cout << "Features to exclude: ";
+	std::cout << "Indexes to exclude: ";
 	for(int i = 0; excluded_inst[i] != -1; i++)
 	{
 		std::cout << excluded_inst[i] << " ";
@@ -154,6 +154,10 @@ double NNeighbor::Dist(double *instance, unsigned int index)
 //Checks to see if the index is part of excluded_inst array
 bool NNeighbor::IsExcluded(int index)
 {
+	if(excluded_inst == NULL)
+	{
+		return false;
+	}
 	for(int i = 0; excluded_inst[i] != -1; i++)
 	{
 		if(index == excluded_inst[i])
