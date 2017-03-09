@@ -23,10 +23,11 @@ private:
 class NNeighbor
 {
 	int *feats_to_look; //an int array terminated by a -1
-	int *feats_to_exclude; //an int array terminated by a -1
+	int *excluded_inst; //an int array terminated by a -1
 	Data *train_data;
 
-	double Dist();
+	double Dist(double *, unsigned int);
+	bool IsExcluded(int);
 
 public:
 	NNeighbor(Data *, int *exclude = NULL, int *look = NULL);

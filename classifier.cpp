@@ -1,8 +1,8 @@
 #include "classifier.h"
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <string.h>
+#include <math.h>
 
 //Function definitions for Data object
 Data::Data(const char *data_file)
@@ -70,32 +70,32 @@ NNeighbor::NNeighbor(Data *d, int *exclude, int *look)
 	{
 		int ind_cnt;
 		for(ind_cnt = 1; exclude[ind_cnt-1] != -1; ind_cnt++);
-		feats_to_exclude = new int[ind_cnt];
-		memcpy(feats_to_exclude, exclude, sizeof(int) * ind_cnt);
+		excluded_inst = new int[ind_cnt];
+		memcpy(excluded_inst, exclude, sizeof(int) * ind_cnt);
 	}
 	else
 	{
-		feats_to_exclude = NULL;
+		excluded_inst = NULL;
 	}
 }
 
 NNeighbor::~NNeighbor()
 {
 	delete[] feats_to_look;
-	delete[] feats_to_exclude;
+	delete[] excluded_inst;
 }
 
-//Updates the current indexes to be ignored
+//Updates the current indexes of instances to be ignored
 void NNeighbor::NewExclude(int *feats)
 {
-	delete[] feats_to_exclude;
+	delete[] excluded_inst;
 	int ind_cnt;
 	for(ind_cnt = 1; feats[ind_cnt-1] != -1; ind_cnt++);
-	feats_to_exclude = new int[ind_cnt];
-	memcpy(feats_to_exclude, feats, sizeof(int) * ind_cnt);
+	excluded_inst = new int[ind_cnt];
+	memcpy(excluded_inst, feats, sizeof(int) * ind_cnt);
 }
 
-//Updates the current indexes to be looked at
+//Updates the current indexes of features to be looked at
 void NNeighbor::NewLook(int *feats)
 {
 	delete[] feats_to_look;
@@ -105,18 +105,18 @@ void NNeighbor::NewLook(int *feats)
 	memcpy(feats_to_look, feats, sizeof(int) * ind_cnt);
 }
 
-//Prints out the current indexes to be ignored
+//Prints out the current indexes of instances to be ignored
 void NNeighbor::PExclude()
 {
 	std::cout << "Features to exclude: ";
-	for(int i = 0; feats_to_exclude[i] != -1; i++)
+	for(int i = 0; excluded_inst[i] != -1; i++)
 	{
-		std::cout << feats_to_exclude[i] << " ";
+		std::cout << excluded_inst[i] << " ";
 	}
 	std::cout << std::endl;
 }
 
-//Prints out the current indexes to be looked at
+//Prints out the current indexes of features to be looked at
 void NNeighbor::PLook()
 {
 	std::cout << "Features to look at: ";
@@ -140,7 +140,47 @@ void NNeighbor::PTrain()
 	}
 }
 
+//Calculates the Euclidean Distance between the instance and an instance at index
+double NNeighbor::Dist(double *instance, unsigned int index)
+{
+	double sum = 0.0;
+	for(int i = 0; feats_to_look[i] != -1; i++)
+	{
+		sum += pow((instance[feats_to_look[i] - 1] - train_data->d[index][feats_to_look[i]]), 2.0);
+	}
+	return sqrt(sum);
+}
+
+//Checks to see if the index is part of excluded_inst array
+bool NNeighbor::IsExcluded(int index)
+{
+	for(int i = 0; excluded_inst[i] != -1; i++)
+	{
+		if(index == excluded_inst[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+//Takes in an array of doubles; the first index holds the first feature
 int NNeighbor::Check(double *instance)
 {
-	return 0;
+	double min_dist = -1.0;
+	double cur_dist, class_pred;
+	for(unsigned int i = 0; i < train_data->Rows(); i++)
+	{
+		if(!IsExcluded(i))
+		{
+			cur_dist = Dist(instance, i);
+			//min_dist is larger than cur_dist
+			if((min_dist == -1) || (min_dist > cur_dist))
+			{
+				min_dist = cur_dist;
+				class_pred = train_data->d[i][0];
+			}
+		}
+	}
+	return (int)class_pred;
 }
