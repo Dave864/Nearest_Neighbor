@@ -2,18 +2,18 @@
 #include "classifier.h"
 #include <iostream>
 
-LeaveOutOne::LeaveOutOne(const char *file)
+LeaveOneOut::LeaveOneOut(const char *file)
 {
 	train_data = new Data(file);
 	classifier = new NNeighbor(train_data);
 }
 
-LeaveOutOne::~LeaveOutOne()
+LeaveOneOut::~LeaveOneOut()
 {
 	delete train_data;
 	delete classifier;
 }
 
-void LeaveOutOne::test(int *feats)
+void LeaveOneOut::test(int *feats)
 {
 }

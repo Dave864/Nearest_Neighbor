@@ -2,6 +2,7 @@
 #include <string>
 #include <stdlib.h>
 #include "classifier.h"
+#include "validator.h"
 
 int main(int argc, char **argv)
 {
