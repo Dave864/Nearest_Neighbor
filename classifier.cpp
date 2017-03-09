@@ -13,8 +13,11 @@ Data::Data(const char *data_file)
 	while(in_file.good())
 	{
 		std::getline(in_file, cur_line);
-		std::cout << "Line " << row_cnt << ": " << cur_line << "\n";
-		row_cnt++;
+		if(cur_line != "")
+		{
+			std::cout << "Line " << row_cnt << ": " << cur_line << "\n";
+			row_cnt++;
+		}
 	}
 	in_file.close();
 }
