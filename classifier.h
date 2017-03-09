@@ -12,6 +12,7 @@ struct Data
 
 	unsigned int Rows();
 	unsigned int Feats();
+
 private:
 	unsigned int row_cnt;
 	unsigned int feat_cnt;
@@ -21,17 +22,21 @@ private:
 
 class NNeighbor
 {
-	int *feats_to_look;
-	int *feats_to_exclude;
+	int *feats_to_look; //an int array terminated by a -1
+	int *feats_to_exclude; //an int array terminated by a -1
 	Data *train_data;
 
 	double Dist();
+
 public:
 	NNeighbor(Data *, int *exclude = NULL, int *look = NULL);
 	~NNeighbor();
 
 	void NewExclude(int *);
 	void NewLook(int *);
+
+	void PExclude();
+	void PLook();
 
 	int Check(double *);
 };

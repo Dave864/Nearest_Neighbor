@@ -54,14 +54,12 @@ NNeighbor::NNeighbor(Data *d, int *exclude, int *look)
 	if(look != NULL)
 	{
 		int ind_cnt;
-		for(ind_cnt = 0; look[ind_cnt] != -1; ind_cnt++);
-		std::cout << "Look array size: " << ind_cnt << std::endl;
+		for(ind_cnt = 1; look[ind_cnt-1] != -1; ind_cnt++);
 		feats_to_look = new int[ind_cnt];
-		memcpy(feats_to_look, look, ind_cnt);
+		memcpy(feats_to_look, look, sizeof(int) * ind_cnt);
 	}
 	else
 	{
-		std::cout << "Look array size: " << train_data->Feats() << std::endl;
 		feats_to_look = new int[train_data->Feats()];
 		for(unsigned int i = 0; i < train_data->Feats(); i++)
 		{
@@ -71,10 +69,9 @@ NNeighbor::NNeighbor(Data *d, int *exclude, int *look)
 	if(exclude != NULL)
 	{
 		int ind_cnt;
-		for(ind_cnt = 0; exclude[ind_cnt] != -1; ind_cnt++);
-		std::cout << "Exclude array size: " << ind_cnt << std::endl;
+		for(ind_cnt = 1; exclude[ind_cnt-1] != -1; ind_cnt++);
 		feats_to_exclude = new int[ind_cnt];
-		memcpy(feats_to_exclude, exclude, ind_cnt);
+		memcpy(feats_to_exclude, exclude, sizeof(int) * ind_cnt);
 	}
 	else
 	{
@@ -90,10 +87,40 @@ NNeighbor::~NNeighbor()
 
 void NNeighbor::NewExclude(int *feats)
 {
+	delete[] feats_to_exclude;
+	int ind_cnt;
+	for(ind_cnt = 1; feats[ind_cnt-1] != -1; ind_cnt++);
+	feats_to_exclude = new int[ind_cnt];
+	memcpy(feats_to_exclude, feats, sizeof(int) * ind_cnt);
 }
 
 void NNeighbor::NewLook(int *feats)
 {
+	delete[] feats_to_look;
+	int ind_cnt;
+	for(ind_cnt = 1; feats[ind_cnt-1] != -1; ind_cnt++);
+	feats_to_look = new int[ind_cnt];
+	memcpy(feats_to_look, feats, sizeof(int) * ind_cnt);
+}
+
+void NNeighbor::PExclude()
+{
+	std::cout << "Features to exclude: ";
+	for(int i = 0; feats_to_exclude[i] != -1; i++)
+	{
+		std::cout << feats_to_exclude[i] << " ";
+	}
+	std::cout << std::endl;
+}
+
+void NNeighbor::PLook()
+{
+	std::cout << "Features to look at: ";
+	for(int i = 0; feats_to_look[i] != -1; i++)
+	{
+		std::cout << feats_to_look[i] << " ";
+	}
+	std::cout << std::endl;
 }
 
 int NNeighbor::Check(double *instance)
