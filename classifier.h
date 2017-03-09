@@ -37,6 +37,7 @@ public:
 
 	void PExclude();
 	void PLook();
+	void PTrain();
 
 	int Check(double *);
 };

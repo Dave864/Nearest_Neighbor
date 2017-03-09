@@ -85,6 +85,7 @@ NNeighbor::~NNeighbor()
 	delete[] feats_to_exclude;
 }
 
+//Updates the current indexes to be ignored
 void NNeighbor::NewExclude(int *feats)
 {
 	delete[] feats_to_exclude;
@@ -94,6 +95,7 @@ void NNeighbor::NewExclude(int *feats)
 	memcpy(feats_to_exclude, feats, sizeof(int) * ind_cnt);
 }
 
+//Updates the current indexes to be looked at
 void NNeighbor::NewLook(int *feats)
 {
 	delete[] feats_to_look;
@@ -103,6 +105,7 @@ void NNeighbor::NewLook(int *feats)
 	memcpy(feats_to_look, feats, sizeof(int) * ind_cnt);
 }
 
+//Prints out the current indexes to be ignored
 void NNeighbor::PExclude()
 {
 	std::cout << "Features to exclude: ";
@@ -113,6 +116,7 @@ void NNeighbor::PExclude()
 	std::cout << std::endl;
 }
 
+//Prints out the current indexes to be looked at
 void NNeighbor::PLook()
 {
 	std::cout << "Features to look at: ";
@@ -121,6 +125,19 @@ void NNeighbor::PLook()
 		std::cout << feats_to_look[i] << " ";
 	}
 	std::cout << std::endl;
+}
+
+//Prints out the training data
+void NNeighbor::PTrain()
+{
+	for(unsigned int i = 0; i < train_data->Rows(); i++)
+	{
+		for(unsigned int j = 0; j < train_data->Feats(); j++)
+		{
+			std::cout << train_data->d[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 int NNeighbor::Check(double *instance)
