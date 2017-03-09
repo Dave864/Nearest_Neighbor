@@ -10,7 +10,9 @@ int main(int argc, char **argv)
 	std::string file;
 	std::getline(std::cin, file);
 	Data trial_data(file.c_str());
-	NNeighbor classifier(&trial_data);
+	int to_look[] = {3, 4, 9, -1};
+	int to_exclude[] = {1, 4, 6, 10, -1};
+	NNeighbor classifier(&trial_data, to_exclude, to_look);
 	//printf("Type the number of the algorithm you want to run.\n\n");
 	//printf("\t1) Forward Selection\n\t2) Backward Selection\n\t3) Anthony's Special Algorithm\n\n");
 	return 0;

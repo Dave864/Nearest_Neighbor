@@ -53,7 +53,8 @@ NNeighbor::NNeighbor(Data *d, int *exclude, int *look)
 	train_data = d;
 	if(look != NULL)
 	{
-		int ind_cnt = ((sizeof look) / (sizeof *look));
+		int ind_cnt;
+		for(ind_cnt = 0; look[ind_cnt] != -1; ind_cnt++);
 		std::cout << "Look array size: " << ind_cnt << std::endl;
 		feats_to_look = new int[ind_cnt];
 		memcpy(feats_to_look, look, ind_cnt);
@@ -69,7 +70,8 @@ NNeighbor::NNeighbor(Data *d, int *exclude, int *look)
 	}
 	if(exclude != NULL)
 	{
-		int ind_cnt = ((sizeof exclude) / (sizeof *exclude));
+		int ind_cnt;
+		for(ind_cnt = 0; exclude[ind_cnt] != -1; ind_cnt++);
 		std::cout << "Exclude array size: " << ind_cnt << std::endl;
 		feats_to_exclude = new int[ind_cnt];
 		memcpy(feats_to_exclude, exclude, ind_cnt);
