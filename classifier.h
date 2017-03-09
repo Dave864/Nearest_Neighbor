@@ -13,7 +13,6 @@ struct Data
 	Data(const char *);
 
 private:
-	double My_atof(char *);
 	void Norm();
 };
 
