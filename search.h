@@ -9,7 +9,7 @@ struct FeatSub
 	int *feats;
 	double accuracy;
 
-	FeatSub(int*, double a = 0.0);
+	FeatSub(int* f = NULL, double a = 0.0);
 	~FeatSub();
 };
 
@@ -18,12 +18,18 @@ class ForSel
 	LeaveOneOut *validator;
 	FeatSub *f_subset;
 	int feat_cnt;
+	int *feats_to_use;
+
+	double best_acc;
+	int* best_set;
+
+	void Expand(int*, int);
 
 public:
 	ForSel(const char*);
 	~ForSel();
 
-	int* search();
+	int* Search();
 };
 
 class BackElim
