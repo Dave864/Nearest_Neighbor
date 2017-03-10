@@ -13,7 +13,8 @@ public:
 	LeaveOneOut(const char *);
 	~LeaveOneOut();
 
-	void test(int *);
+	double Test(int *);
+	int FeatCnt();
 };
 
 #endif

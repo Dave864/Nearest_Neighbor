@@ -14,7 +14,7 @@ LeaveOneOut::~LeaveOneOut()
 	delete classifier;
 }
 
-void LeaveOneOut::test(int *feats)//feats must be terminated by a -1
+double LeaveOneOut::Test(int *feats)//feats must be terminated by a -1
 {
 	int correct_cnt = 0;
 	classifier->NewLook(feats);
@@ -30,4 +30,10 @@ void LeaveOneOut::test(int *feats)//feats must be terminated by a -1
 	}
 	double accuracy = (double)correct_cnt / (double)train_data->Rows();
 	std::cout << "Accuracy is " << accuracy << std::endl;
+	return accuracy;
+}
+
+int LeaveOneOut::FeatCnt()
+{
+	return train_data->Feats();
 }
