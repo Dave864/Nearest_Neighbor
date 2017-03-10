@@ -13,6 +13,8 @@ struct Data
 	unsigned int Rows();
 	unsigned int Feats();
 
+	double* operator [] (int);
+
 private:
 	unsigned int row_cnt;
 	unsigned int feat_cnt;

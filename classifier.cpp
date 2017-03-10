@@ -45,6 +45,11 @@ unsigned int Data::Feats()
 void Data::Norm()
 {
 }
+
+double* Data::operator [] (int r)
+{
+	return d[r];
+}
 //End of definitions for Data object
 
 //Function definitions for nearest neighbor classifier
@@ -134,7 +139,7 @@ void NNeighbor::PTrain()
 	{
 		for(unsigned int j = 0; j < train_data->Feats(); j++)
 		{
-			std::cout << train_data->d[i][j] << " ";
+			std::cout << train_data[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}
@@ -146,7 +151,7 @@ double NNeighbor::Dist(double *instance, unsigned int index)
 	double sum = 0.0;
 	for(int i = 0; feats_to_look[i] != -1; i++)
 	{
-		sum += pow((instance[feats_to_look[i] - 1] - train_data->d[index][feats_to_look[i]]), 2.0);
+		sum += pow((instance[feats_to_look[i] - 1] - (*train_data)[index][feats_to_look[i]]), 2.0);
 	}
 	return sqrt(sum);
 }
@@ -182,7 +187,7 @@ int NNeighbor::Check(double *instance)
 			if((min_dist == -1) || (min_dist > cur_dist))
 			{
 				min_dist = cur_dist;
-				class_pred = train_data->d[i][0];
+				class_pred = (*train_data)[i][0];
 			}
 		}
 	}
