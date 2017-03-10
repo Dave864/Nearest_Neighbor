@@ -42,7 +42,7 @@ public:
 	void PLook();
 	void PTrain();
 
-	int Check(double *);
+	int CheckClass(double *);
 };
 
 #endif

@@ -151,7 +151,7 @@ double NNeighbor::Dist(double *instance, unsigned int index)
 	double sum = 0.0;
 	for(int i = 0; feats_to_look[i] != -1; i++)
 	{
-		sum += pow((instance[feats_to_look[i] - 1] - (*train_data)[index][feats_to_look[i]]), 2.0);
+		sum += pow((instance[feats_to_look[i]] - (*train_data)[index][feats_to_look[i]]), 2.0);
 	}
 	return sqrt(sum);
 }
@@ -173,8 +173,8 @@ bool NNeighbor::IsExcluded(int index)
 	return false;
 }
 
-//Takes in an array of doubles; the first index holds the first feature
-int NNeighbor::Check(double *instance)
+//Takes in an array of doubles; the first index holds the class type
+int NNeighbor::CheckClass(double *instance)
 {
 	double min_dist = -1.0;
 	double cur_dist, class_pred;
