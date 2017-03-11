@@ -11,12 +11,15 @@ struct FeatSub
 
 	FeatSub(int* f = NULL, double a = 0.0);
 	~FeatSub();
+
+	void Print();
 };
 
 class ForSel
 {
 	LeaveOneOut *validator;
 	FeatSub *f_subset;
+	int f_subset_sz;
 	int feat_cnt;
 	int *feats_to_use;
 
@@ -24,12 +27,14 @@ class ForSel
 	int* best_set;
 
 	void Expand(int*, int);
+	int* SearchHelper();
 
 public:
 	ForSel(const char*);
 	~ForSel();
 
-	int* Search();
+	void Search();
+	void PrintSubset();
 };
 
 class BackElim
