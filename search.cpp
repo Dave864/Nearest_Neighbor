@@ -141,11 +141,12 @@ int* ForSel::SearchHelper()
 				//best = cur_set_tmp;
 				best.accuracy = cur.accuracy;
 				best = cur.feats;
+				std::cout << std::endl;
 			}
 			//Print out message saying that current best feature set is not the best set
 			else
 			{
-				std::cout << "(Warning, Accuracy has decreased!";
+				std::cout << "\n(Warning, Accuracy has decreased!";
 				std::cout << " Continuing search in case of local maxima)\n";
 			}
 			//Print out the current best feature set

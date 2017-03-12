@@ -29,7 +29,16 @@ double LeaveOneOut::Test(int *feats)//feats must be terminated by a -1
 		}
 	}
 	double accuracy = (double)correct_cnt / (double)train_data->Rows();
-	std::cout << "Accuracy is " << accuracy << std::endl;
+	std::cout << "\tUsing feature(s) {";
+	for(int i = 0; feats[i] != -1; i++)
+	{
+		if(i > 0)
+		{
+			std::cout << ", ";
+		}
+		std::cout << feats[i];
+	}
+	std::cout << "} accuracy is " << accuracy << std::endl;
 	return accuracy;
 }
 
