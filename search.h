@@ -12,6 +12,7 @@ struct FeatSub
 	FeatSub(int* f = NULL, double a = 0.0);
 	~FeatSub();
 
+	void operator = (int *);
 	void Print();
 };
 
@@ -23,8 +24,7 @@ class ForSel
 	int feat_cnt;
 	int *feats_to_use;
 
-	double best_acc;
-	int* best_set;
+	FeatSub best;
 
 	void Expand(int*, int);
 	int* SearchHelper();

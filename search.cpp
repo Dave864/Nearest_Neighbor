@@ -13,6 +13,10 @@ FeatSub::FeatSub(int *f, double a)
 		feats = new int[f_cnt];
 		memcpy(feats, f, sizeof(int) * f_cnt);
 	}
+	else
+	{
+		feats = f;
+	}
 }
 
 FeatSub::~FeatSub()
@@ -20,16 +24,36 @@ FeatSub::~FeatSub()
 	delete[] feats;
 }
 
+void FeatSub::operator = (int *new_feats)
+{
+	if(new_feats != NULL)
+	{
+		int f_cnt;
+		int *feats_tmp = feats;
+		for(f_cnt = 1; new_feats[f_cnt-1] != -1; f_cnt++);
+		feats = new int[f_cnt];
+		memcpy(feats, new_feats, sizeof(int) * f_cnt);
+		delete[] feats_tmp;
+	}
+	else
+	{
+		feats = new_feats;
+	}
+}
+
 void FeatSub::Print()
 {
 	std::cout << "{";
-	for(int i = 0; feats[i] != -1; i++)
+	if(feats != NULL)
 	{
-		if(i > 0)
+		for(int i = 0; feats[i] != -1; i++)
 		{
-			std::cout <<  ", ";
+			if(i > 0)
+			{
+				std::cout <<  ", ";
+			}
+			std::cout << feats[i];
 		}
-		std::cout << feats[i];
 	}
 	std::cout << "}";
 }
@@ -49,10 +73,10 @@ ForSel::ForSel(const char *file)
 	}
 	
 	//Initialize the result and subset containers
-	best_acc = 0.0;
 	f_subset = NULL;
 	f_subset_sz = 0;
-	best_set = NULL;
+	best.accuracy = 0.0;
+	best = NULL;
 }
 
 ForSel::~ForSel()
@@ -60,7 +84,6 @@ ForSel::~ForSel()
 	delete validator;
 	delete[] f_subset;
 	delete[] feats_to_use;
-	delete[] best_set;
 }
 
 //Expand the feature set
@@ -87,56 +110,76 @@ void ForSel::Expand(int *cur_best, int subset_sz)
 //Runs the actual search
 int* ForSel::SearchHelper()
 {
-	double cur_acc = 0.0;
+	//double cur_acc = 0.0;
 	int *cur_set_tmp = NULL;
 	int *cur_set = NULL;
+	FeatSub cur;
 
 	for(int i = 0; i <= feat_cnt; i++)
 	{
 		//Get best accuracy of current subset
 		if(f_subset != NULL)
 		{
-			cur_acc = -1.0;
+			//cur_acc = -1.0;
+			cur.accuracy = -1.0;
 			cur_set_tmp = NULL;
 			for(int j = 0; j <= (feat_cnt - i); j++)
 			{
 				double f_acc;
-				if((f_acc = validator->Test(f_subset[j].feats)) > cur_acc)
+				if((f_acc = validator->Test(f_subset[j].feats)) > cur.accuracy/*cur_acc*/)
 				{
-					cur_acc = f_acc;
-					cur_set_tmp = f_subset[j].feats;
+					//cur_acc = f_acc;
+					cur.accuracy = f_acc;
+					//cur_set_tmp = f_subset[j].feats;
+					cur = f_subset[j].feats;
 				}
 			}
 			//Update best_acc and best_set
-			if(cur_acc > best_acc)
+			if(/*cur_acc*/cur.accuracy > best.accuracy)
 			{
-				best_acc = cur_acc;
-				int *prev_best = best_set;
-				best_set = new int[i + 1];
-				memcpy(best_set, cur_set_tmp, sizeof(int) * (i + 1));
-				delete[] prev_best;
+				//best.accuracy = cur_acc;
+				//best = cur_set_tmp;
+				best.accuracy = cur.accuracy;
+				best = cur.feats;
 			}
+			//Print out message saying that current best feature set is not the best set
+			else
+			{
+				std::cout << "(Warning, Accuracy has decreased!";
+				std::cout << " Continuing search in case of local maxima)\n";
+			}
+			//Print out the current best feature set
+			std::cout << "Feature set ";
+			cur.Print();
+			std::cout << " was best, accuracy is " << cur.accuracy << "%\n\n";
 			//Hard copy the cur_set_tmp into cur_set
-			if(cur_set_tmp != NULL)
+			/*if(cur_set_tmp != NULL)
 			{
-				cur_set = new int[i + 1];
-				memcpy(cur_set, cur_set_tmp, sizeof(int) * (i + 1));
-			}
+				//cur_set = new int[i + 1];
+				//memcpy(cur_set, cur_set_tmp, sizeof(int) * (i + 1));
+				//cur = cur_set_tmp;
+			}*/
 			delete[] f_subset;
 			//Update feats_to_use
-			for(int t = 0; cur_set[t] != -1; t++)
+			for(int t = 0; cur.feats[t] != -1; t++)
 			{
-				feats_to_use[cur_set[t] - 1] = -1;
+				feats_to_use[cur.feats[t] - 1] = -1;
 			}
 		}
-		Expand(cur_set, i);
+		Expand(cur.feats, i);
 		delete[] cur_set;
 	}
-	return best_set;
+	return best.feats;
 }
 
 void ForSel::Search()
 {
+	std::cout << "Beginning Search.\n\n";
+	SearchHelper();
+	std::cout << "Finished search!! The best feature subset is ";
+	best.Print();
+	std::cout << ", which has an accuracy of ";
+	std::cout << best.accuracy << "%\n";
 }
 
 void ForSel::PrintSubset()
