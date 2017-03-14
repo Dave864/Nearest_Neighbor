@@ -26,19 +26,25 @@ FeatSub::~FeatSub()
 
 void FeatSub::operator = (int *new_feats)
 {
+	int *feats_tmp = feats;
 	if(new_feats != NULL)
 	{
 		int f_cnt;
-		int *feats_tmp = feats;
 		for(f_cnt = 1; new_feats[f_cnt-1] != -1; f_cnt++);
 		feats = new int[f_cnt];
 		memcpy(feats, new_feats, sizeof(int) * f_cnt);
-		delete[] feats_tmp;
 	}
 	else
 	{
 		feats = new_feats;
 	}
+	delete[] feats_tmp;
+}
+
+void FeatSub::operator = (FeatSub original)
+{
+	(*this) = original.feats;
+	accuracy = original.accuracy;
 }
 
 void FeatSub::Print()
@@ -139,8 +145,6 @@ void ForSel::Expand(int *cur_best, int subset_sz)
 //Runs the actual search
 int* ForSel::SearchHelper()
 {
-	int *cur_set_tmp = NULL;
-	int *cur_set = NULL;
 	FeatSub cur;
 
 	for(int i = 0; i <= feat_cnt; i++)
@@ -149,7 +153,6 @@ int* ForSel::SearchHelper()
 		if(f_subset != NULL)
 		{
 			cur.accuracy = -1.0;
-			cur_set_tmp = NULL;
 			for(int j = 0; j <= (feat_cnt - i); j++)
 			{
 				double f_acc;
@@ -184,7 +187,6 @@ int* ForSel::SearchHelper()
 			}
 		}
 		Expand(cur.feats, i);
-		delete[] cur_set;
 	}
 	return best.feats;
 }
@@ -194,14 +196,88 @@ int* ForSel::SearchHelper()
 BackElim::BackElim(const char *file):SearchAlgorithm(file)
 {
 	//Create an array of features that can be used
-	feats_to_use = new int[feat_cnt];
+	feats_to_use = new int[feat_cnt + 1];
 	for(int i = 0; i < feat_cnt; i++)
 	{
 		feats_to_use[i] = i+1;
 	}
+	feats_to_use[feat_cnt] = -1;
+
+	//Create the initial feature subset
+	f_subset = new FeatSub[1];
+	f_subset[0] = feats_to_use;
+	f_subset_sz = feat_cnt;
 }
 
+//Expand the feature set
+void BackElim::Expand(int *cur_best, int subset_sz)
+{
+	f_subset = new FeatSub[feat_cnt - subset_sz];
+	f_subset_sz = feat_cnt - subset_sz;
+
+	for(int i = 0; i < f_subset_sz; i++)
+	{
+		f_subset[i].feats = new int[f_subset_sz];
+		//Remove one feature from the cur_best
+		int ind = 0;
+		for(int j = 0; j <= f_subset_sz; j++)
+		{
+			if(cur_best[j] != cur_best[i] || cur_best[j] == -1)
+			{
+				f_subset[i].feats[ind] = cur_best[j];
+				ind++;
+			}
+		}
+	}
+}
+
+//Runs the actual search
 int* BackElim::SearchHelper()
 {
-	return NULL;
+	//Initialize best
+	best.accuracy = validator->Test(f_subset[0].feats);
+	best = f_subset[0].feats;
+
+	FeatSub cur;
+	cur = best;
+
+	std::cout << std::endl;
+
+	for(int i = 0; i <= feat_cnt; i++)
+	{
+		//Get best accuracy of current subset
+		if(i > 0)
+		{
+			cur.accuracy = -1.0;
+			for(int j = 0; j <= (feat_cnt - i); j++)
+			{
+				double f_acc;
+				if((f_acc = validator->Test(f_subset[j].feats)) > cur.accuracy)
+				{
+					cur.accuracy = f_acc;
+					cur = f_subset[j].feats;
+				}
+			}
+			//Update best_acc and best_set
+			if(cur.accuracy > best.accuracy)
+			{
+				best.accuracy = cur.accuracy;
+				best = cur.feats;
+				std::cout << std::endl;
+			}
+			//Print out message saying that current best feature set is not the best set
+			else
+			{
+				std::cout << "\n(Warning, Accuracy has decreased!";
+				std::cout << " Continuing search in case of local maxima)\n";
+			}
+		}
+		//Print out the current best feature set
+		std::cout << "Feature set ";
+		cur.Print();
+		std::cout << " was best, accuracy is " << cur.accuracy << "%\n\n";
+		delete[] f_subset;
+		Expand(cur.feats, i);
+	}
+	return best.feats;
 }

@@ -13,6 +13,7 @@ struct FeatSub
 	~FeatSub();
 
 	void operator = (int *);
+	void operator = (FeatSub);
 	void Print();
 };
 
@@ -49,7 +50,7 @@ public:
 
 class BackElim : public SearchAlgorithm
 {
-	void Contract(int*, int);
+	void Expand(int*, int);
 	int* SearchHelper();
 
 public:

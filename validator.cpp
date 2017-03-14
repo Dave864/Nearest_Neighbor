@@ -38,7 +38,7 @@ double LeaveOneOut::Test(int *feats)//feats must be terminated by a -1
 		}
 		std::cout << feats[i];
 	}
-	std::cout << "} accuracy is " << accuracy << std::endl;
+	std::cout << "} accuracy is " << accuracy << "%\n";
 	return accuracy;
 }
 
