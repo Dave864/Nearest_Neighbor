@@ -39,44 +39,22 @@ public:
 
 class ForSel : public SearchAlgorithm
 {
-	/*LeaveOneOut *validator;
-	FeatSub *f_subset;
-	int f_subset_sz;
-	int feat_cnt;
-	int *feats_to_use;
-
-	FeatSub best;*/
-
 	void Expand(int*, int);
 	int* SearchHelper();
 
 public:
-	ForSel(const char* file);// : SearchAlgorithm(file) {};
+	ForSel(const char* file);
 	~ForSel() {};
-
-	//void Search();
-	//void PrintSubset();
 };
 
 class BackElim : public SearchAlgorithm
 {
-	/*LeaveOneOut *validator;
-	FeatSub *f_subset;
-	int f_subset_sz;
-	int feat_cnt;
-	int *feats_to_use;
-
-	FeatSub best;*/
-
 	void Contract(int*, int);
-	//int *SearchHelper();
+	int* SearchHelper();
 
 public:
-	BackElim(const char* file);// : SearchAlgorithm(file) {}
+	BackElim(const char* file);
 	~BackElim() {};
-
-	//void Search();
-	//void PrintSubset();
 };
 
 #endif

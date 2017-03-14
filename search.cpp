@@ -64,13 +64,6 @@ SearchAlgorithm::SearchAlgorithm(const char * file)
 {
 	validator = new LeaveOneOut(file);
 	feat_cnt = validator->FeatCnt();
-
-	//Create an array of features that can be used
-	/*feats_to_use = new int[feat_cnt];
-	for(int i = 0; i < feat_cnt; i++)
-	{
-		feats_to_use[i] = i+1;
-	}*/
 	
 	//Initialize the result and subset containers
 	f_subset = NULL;
@@ -114,29 +107,13 @@ void SearchAlgorithm::PrintSubset()
 //start of ForSel functions
 ForSel::ForSel(const char *file):SearchAlgorithm(file)
 {
-	//validator = new LeaveOneOut(file);
-	//feat_cnt = validator->FeatCnt();
-
 	//Create an array of features that can be used
 	feats_to_use = new int[feat_cnt];
 	for(int i = 0; i < feat_cnt; i++)
 	{
 		feats_to_use[i] = i+1;
 	}
-	
-	//Initialize the result and subset containers
-	//f_subset = NULL;
-	//f_subset_sz = 0;
-	//best.accuracy = 0.0;
-	//best = NULL;
 }
-
-/*ForSel::~ForSel()
-{
-	delete validator;
-	delete[] f_subset;
-	delete[] feats_to_use;
-}*/
 
 //Expand the feature set
 void ForSel::Expand(int *cur_best, int subset_sz)
@@ -162,7 +139,6 @@ void ForSel::Expand(int *cur_best, int subset_sz)
 //Runs the actual search
 int* ForSel::SearchHelper()
 {
-	//double cur_acc = 0.0;
 	int *cur_set_tmp = NULL;
 	int *cur_set = NULL;
 	FeatSub cur;
@@ -212,45 +188,20 @@ int* ForSel::SearchHelper()
 	}
 	return best.feats;
 }
-
-/*void ForSel::Search()
-{
-	std::cout << "Beginning Search.\n\n";
-	SearchHelper();
-	std::cout << "Finished search!! The best feature subset is ";
-	best.Print();
-	std::cout << ", which has an accuracy of ";
-	std::cout << best.accuracy << "%\n";
-}*/
-
-/*void ForSel::PrintSubset()
-{
-	std::cout << "{";
-	for(int i = 0; i < f_subset_sz; i++)
-	{
-		if(i > 0)
-		{
-			std::cout << ", ";
-		}
-		f_subset[i].Print();
-	}
-	std::cout << "}\n";
-}*/
 //end of ForSel functions
 
 //start of BackElim functions
-/*BackElim::BackElim(const char *file)
+BackElim::BackElim(const char *file):SearchAlgorithm(file)
 {
-	validator = new LeaveOneOut(file);
-	feat_cnt = validator->FeatCnt();
-	f_subset = NULL;
-}*/
+	//Create an array of features that can be used
+	feats_to_use = new int[feat_cnt];
+	for(int i = 0; i < feat_cnt; i++)
+	{
+		feats_to_use[i] = i+1;
+	}
+}
 
-/*BackElim::~BackElim()
+int* BackElim::SearchHelper()
 {
-	delete validator;
-}*/
-
-/*void BackElim::Search()
-{
-}*/
+	return NULL;
+}
