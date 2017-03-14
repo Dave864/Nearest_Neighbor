@@ -15,6 +15,7 @@ public:
 
 	double Test(int *);
 	int FeatCnt();
+	void PrintDataInfo();
 };
 
 #endif

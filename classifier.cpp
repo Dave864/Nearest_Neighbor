@@ -30,6 +30,9 @@ Data::Data(const char *data_file)
 		}
 	}
 	in_file.close();
+
+	std::cout << "This dataset has " << feat_cnt << " features (not including the class attribute), ";
+	std::cout << "with " << row_cnt << " instances.\n";
 }
 
 unsigned int Data::Rows()

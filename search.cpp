@@ -119,6 +119,9 @@ ForSel::ForSel(const char *file):SearchAlgorithm(file)
 	{
 		feats_to_use[i] = i+1;
 	}
+
+	//Prompt
+	std::cout << "\nRunning Forward Selection\n\n";
 }
 
 //Expand the feature set
@@ -207,6 +210,9 @@ BackElim::BackElim(const char *file):SearchAlgorithm(file)
 	f_subset = new FeatSub[1];
 	f_subset[0] = feats_to_use;
 	f_subset_sz = feat_cnt;
+
+	//Prompt
+	std::cout << "\nRunning Backward Elimination\n\n";
 }
 
 //Expand the feature set
