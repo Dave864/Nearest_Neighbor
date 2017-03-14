@@ -16,8 +16,9 @@ struct FeatSub
 	void Print();
 };
 
-class ForSel
+class SearchAlgorithm
 {
+protected:
 	LeaveOneOut *validator;
 	FeatSub *f_subset;
 	int f_subset_sz;
@@ -26,28 +27,56 @@ class ForSel
 
 	FeatSub best;
 
-	void Expand(int*, int);
-	int* SearchHelper();
-
+	void SearchAction(int*, int) {return;}
+	virtual int* SearchHelper() {return NULL;}
 public:
-	ForSel(const char*);
-	~ForSel();
+	SearchAlgorithm(const char*);
+	virtual ~SearchAlgorithm() = 0;
 
 	void Search();
 	void PrintSubset();
 };
 
-class BackElim
+class ForSel : public SearchAlgorithm
 {
-	LeaveOneOut *validator;
+	/*LeaveOneOut *validator;
 	FeatSub *f_subset;
+	int f_subset_sz;
 	int feat_cnt;
+	int *feats_to_use;
+
+	FeatSub best;*/
+
+	void Expand(int*, int);
+	int* SearchHelper();
 
 public:
-	BackElim(const char*);
-	~BackElim();
+	ForSel(const char* file);// : SearchAlgorithm(file) {};
+	~ForSel() {};
 
-	int* search();
+	//void Search();
+	//void PrintSubset();
+};
+
+class BackElim : public SearchAlgorithm
+{
+	/*LeaveOneOut *validator;
+	FeatSub *f_subset;
+	int f_subset_sz;
+	int feat_cnt;
+	int *feats_to_use;
+
+	FeatSub best;*/
+
+	void Contract(int*, int);
+	//int *SearchHelper();
+
+public:
+	BackElim(const char* file);// : SearchAlgorithm(file) {}
+	~BackElim() {};
+
+	//void Search();
+	//void PrintSubset();
 };
 
 #endif

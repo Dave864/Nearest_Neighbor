@@ -59,11 +59,63 @@ void FeatSub::Print()
 }
 //end of FeatSub functions
 
-//start of ForSel functions
-ForSel::ForSel(const char *file)
+//start of SearchAlgortihm base class
+SearchAlgorithm::SearchAlgorithm(const char * file)
 {
 	validator = new LeaveOneOut(file);
 	feat_cnt = validator->FeatCnt();
+
+	//Create an array of features that can be used
+	/*feats_to_use = new int[feat_cnt];
+	for(int i = 0; i < feat_cnt; i++)
+	{
+		feats_to_use[i] = i+1;
+	}*/
+	
+	//Initialize the result and subset containers
+	f_subset = NULL;
+	f_subset_sz = 0;
+	best.accuracy = 0.0;
+	best = NULL;
+}
+
+SearchAlgorithm::~SearchAlgorithm()
+{
+	delete validator;
+	delete[] f_subset;
+	delete[] feats_to_use;
+}
+
+void SearchAlgorithm::Search()
+{
+	std::cout << "Beginning Search.\n\n";
+	SearchHelper();
+	std::cout << "Finished search!! The best feature subset is ";
+	best.Print();
+	std::cout << ", which has an accuracy of ";
+	std::cout << best.accuracy << "%\n";
+}
+
+void SearchAlgorithm::PrintSubset()
+{
+	std::cout << "{";
+	for(int i = 0; i < f_subset_sz; i++)
+	{
+		if(i > 0)
+		{
+			std::cout << ", ";
+		}
+		f_subset[i].Print();
+	}
+	std::cout << "}\n";
+}
+//end of SearchAlgorithm base class
+
+//start of ForSel functions
+ForSel::ForSel(const char *file):SearchAlgorithm(file)
+{
+	//validator = new LeaveOneOut(file);
+	//feat_cnt = validator->FeatCnt();
 
 	//Create an array of features that can be used
 	feats_to_use = new int[feat_cnt];
@@ -73,18 +125,18 @@ ForSel::ForSel(const char *file)
 	}
 	
 	//Initialize the result and subset containers
-	f_subset = NULL;
-	f_subset_sz = 0;
-	best.accuracy = 0.0;
-	best = NULL;
+	//f_subset = NULL;
+	//f_subset_sz = 0;
+	//best.accuracy = 0.0;
+	//best = NULL;
 }
 
-ForSel::~ForSel()
+/*ForSel::~ForSel()
 {
 	delete validator;
 	delete[] f_subset;
 	delete[] feats_to_use;
-}
+}*/
 
 //Expand the feature set
 void ForSel::Expand(int *cur_best, int subset_sz)
@@ -120,25 +172,20 @@ int* ForSel::SearchHelper()
 		//Get best accuracy of current subset
 		if(f_subset != NULL)
 		{
-			//cur_acc = -1.0;
 			cur.accuracy = -1.0;
 			cur_set_tmp = NULL;
 			for(int j = 0; j <= (feat_cnt - i); j++)
 			{
 				double f_acc;
-				if((f_acc = validator->Test(f_subset[j].feats)) > cur.accuracy/*cur_acc*/)
+				if((f_acc = validator->Test(f_subset[j].feats)) > cur.accuracy)
 				{
-					//cur_acc = f_acc;
 					cur.accuracy = f_acc;
-					//cur_set_tmp = f_subset[j].feats;
 					cur = f_subset[j].feats;
 				}
 			}
 			//Update best_acc and best_set
-			if(/*cur_acc*/cur.accuracy > best.accuracy)
+			if(cur.accuracy > best.accuracy)
 			{
-				//best.accuracy = cur_acc;
-				//best = cur_set_tmp;
 				best.accuracy = cur.accuracy;
 				best = cur.feats;
 				std::cout << std::endl;
@@ -153,13 +200,6 @@ int* ForSel::SearchHelper()
 			std::cout << "Feature set ";
 			cur.Print();
 			std::cout << " was best, accuracy is " << cur.accuracy << "%\n\n";
-			//Hard copy the cur_set_tmp into cur_set
-			/*if(cur_set_tmp != NULL)
-			{
-				//cur_set = new int[i + 1];
-				//memcpy(cur_set, cur_set_tmp, sizeof(int) * (i + 1));
-				//cur = cur_set_tmp;
-			}*/
 			delete[] f_subset;
 			//Update feats_to_use
 			for(int t = 0; cur.feats[t] != -1; t++)
@@ -173,7 +213,7 @@ int* ForSel::SearchHelper()
 	return best.feats;
 }
 
-void ForSel::Search()
+/*void ForSel::Search()
 {
 	std::cout << "Beginning Search.\n\n";
 	SearchHelper();
@@ -181,9 +221,9 @@ void ForSel::Search()
 	best.Print();
 	std::cout << ", which has an accuracy of ";
 	std::cout << best.accuracy << "%\n";
-}
+}*/
 
-void ForSel::PrintSubset()
+/*void ForSel::PrintSubset()
 {
 	std::cout << "{";
 	for(int i = 0; i < f_subset_sz; i++)
@@ -195,23 +235,22 @@ void ForSel::PrintSubset()
 		f_subset[i].Print();
 	}
 	std::cout << "}\n";
-}
+}*/
 //end of ForSel functions
 
 //start of BackElim functions
-BackElim::BackElim(const char *file)
+/*BackElim::BackElim(const char *file)
 {
 	validator = new LeaveOneOut(file);
 	feat_cnt = validator->FeatCnt();
 	f_subset = NULL;
-}
+}*/
 
-BackElim::~BackElim()
+/*BackElim::~BackElim()
 {
 	delete validator;
-}
+}*/
 
-int* BackElim::search()
+/*void BackElim::Search()
 {
-	return NULL;
-}
+}*/
