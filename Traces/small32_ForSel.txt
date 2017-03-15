@@ -5,6 +5,7 @@ Type in the name of the file to test: Type the number of the algorithm you want 
 	2) Backward Selection
 
 	This dataset has 10 features (not including the class attribute), with 100 instances.
+Normalizing data, please wait...
 
 Running Forward Selection
 
@@ -31,7 +32,7 @@ Feature set {7} was best, accuracy is 0.89%
 	Using feature(s) {7, 6} accuracy is 0.96%
 	Using feature(s) {7, 8} accuracy is 0.84%
 	Using feature(s) {7, 9} accuracy is 0.79%
-	Using feature(s) {7, 10} accuracy is 0.82%
+	Using feature(s) {7, 10} accuracy is 0.72%
 
 Feature set {7, 6} was best, accuracy is 0.96%
 
@@ -42,7 +43,7 @@ Feature set {7, 6} was best, accuracy is 0.96%
 	Using feature(s) {7, 6, 5} accuracy is 0.89%
 	Using feature(s) {7, 6, 8} accuracy is 0.94%
 	Using feature(s) {7, 6, 9} accuracy is 0.87%
-	Using feature(s) {7, 6, 10} accuracy is 0.84%
+	Using feature(s) {7, 6, 10} accuracy is 0.7%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {7, 6, 8} was best, accuracy is 0.94%
@@ -53,7 +54,7 @@ Feature set {7, 6, 8} was best, accuracy is 0.94%
 	Using feature(s) {7, 6, 8, 4} accuracy is 0.85%
 	Using feature(s) {7, 6, 8, 5} accuracy is 0.8%
 	Using feature(s) {7, 6, 8, 9} accuracy is 0.76%
-	Using feature(s) {7, 6, 8, 10} accuracy is 0.83%
+	Using feature(s) {7, 6, 8, 10} accuracy is 0.73%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {7, 6, 8, 1} was best, accuracy is 0.85%
@@ -63,7 +64,7 @@ Feature set {7, 6, 8, 1} was best, accuracy is 0.85%
 	Using feature(s) {7, 6, 8, 1, 4} accuracy is 0.81%
 	Using feature(s) {7, 6, 8, 1, 5} accuracy is 0.78%
 	Using feature(s) {7, 6, 8, 1, 9} accuracy is 0.78%
-	Using feature(s) {7, 6, 8, 1, 10} accuracy is 0.74%
+	Using feature(s) {7, 6, 8, 1, 10} accuracy is 0.72%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {7, 6, 8, 1, 4} was best, accuracy is 0.81%
@@ -72,7 +73,7 @@ Feature set {7, 6, 8, 1, 4} was best, accuracy is 0.81%
 	Using feature(s) {7, 6, 8, 1, 4, 3} accuracy is 0.75%
 	Using feature(s) {7, 6, 8, 1, 4, 5} accuracy is 0.81%
 	Using feature(s) {7, 6, 8, 1, 4, 9} accuracy is 0.8%
-	Using feature(s) {7, 6, 8, 1, 4, 10} accuracy is 0.77%
+	Using feature(s) {7, 6, 8, 1, 4, 10} accuracy is 0.72%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {7, 6, 8, 1, 4, 5} was best, accuracy is 0.81%
@@ -80,27 +81,27 @@ Feature set {7, 6, 8, 1, 4, 5} was best, accuracy is 0.81%
 	Using feature(s) {7, 6, 8, 1, 4, 5, 2} accuracy is 0.77%
 	Using feature(s) {7, 6, 8, 1, 4, 5, 3} accuracy is 0.74%
 	Using feature(s) {7, 6, 8, 1, 4, 5, 9} accuracy is 0.8%
-	Using feature(s) {7, 6, 8, 1, 4, 5, 10} accuracy is 0.79%
+	Using feature(s) {7, 6, 8, 1, 4, 5, 10} accuracy is 0.68%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {7, 6, 8, 1, 4, 5, 9} was best, accuracy is 0.8%
 
 	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 2} accuracy is 0.8%
 	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 3} accuracy is 0.77%
-	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 10} accuracy is 0.78%
+	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 10} accuracy is 0.6%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {7, 6, 8, 1, 4, 5, 9, 2} was best, accuracy is 0.8%
 
 	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 2, 3} accuracy is 0.76%
-	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 2, 10} accuracy is 0.75%
+	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 2, 10} accuracy is 0.6%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {7, 6, 8, 1, 4, 5, 9, 2, 3} was best, accuracy is 0.76%
 
-	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 2, 3, 10} accuracy is 0.75%
+	Using feature(s) {7, 6, 8, 1, 4, 5, 9, 2, 3, 10} accuracy is 0.67%
 
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
-Feature set {7, 6, 8, 1, 4, 5, 9, 2, 3, 10} was best, accuracy is 0.75%
+Feature set {7, 6, 8, 1, 4, 5, 9, 2, 3, 10} was best, accuracy is 0.67%
 
 Finished search!! The best feature subset is {7, 6}, which has an accuracy of 0.96%
