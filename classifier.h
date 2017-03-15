@@ -13,13 +13,16 @@ struct Data
 	unsigned int Rows();
 	unsigned int Feats();
 
+	void Normalize();
+
 	double* operator [] (int);
 
 private:
 	unsigned int row_cnt;
 	unsigned int feat_cnt;
+	double min, max;
 
-	void Norm();
+	void Norm(int, int);
 };
 
 class NNeighbor

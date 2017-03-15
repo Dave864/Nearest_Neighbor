@@ -6,6 +6,7 @@ LeaveOneOut::LeaveOneOut(const char *file)
 {
 	train_data = new Data(file);
 	classifier = new NNeighbor(train_data);
+	train_data->Normalize();
 }
 
 LeaveOneOut::~LeaveOneOut()

@@ -9,6 +9,8 @@ Data::Data(const char *data_file)
 {
 	feat_cnt = 0;
 	row_cnt = 0;
+	min = -1.0;
+	max = -1.0;
 	std::string cur_line;
 	std::ifstream in_file;
 	in_file.open(data_file, std::ifstream::in);
@@ -22,7 +24,11 @@ Data::Data(const char *data_file)
 			char *tok_str = (char *)cur_line.c_str();
 			for(tok = strtok_r(tok_str, " \n", &s_ptr); tok != NULL; tok = strtok_r(NULL, " \n", &s_ptr))
 			{
-				d[row_cnt][col_cnt] = atof(tok);
+				double value = atof(tok);
+				d[row_cnt][col_cnt] = value;
+				//Update info for normalizing data
+				max = (value > max) ? value : max;
+				min = (value < min || min == -1.0) ? value : min;
 				col_cnt++;
 			}
 			feat_cnt = col_cnt-1;
@@ -45,8 +51,21 @@ unsigned int Data::Feats()
 	return feat_cnt;
 }
 
-void Data::Norm()
+void Data::Normalize()
 {
+	std::cout << "Normalizing data, please wait...\n";
+	for(unsigned int i = 0; i < row_cnt; i++)
+	{
+		for(unsigned int j = 1; j < feat_cnt; j++)
+		{
+			Norm(i, j);
+		}
+	}
+}
+
+void Data::Norm(int row, int col)
+{
+	d[row][col] = (d[row][col] - min) / (max - min);
 }
 
 double* Data::operator [] (int r)
