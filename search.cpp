@@ -19,6 +19,22 @@ FeatSub::FeatSub(int *f, double a)
 	}
 }
 
+FeatSub::FeatSub(const FeatSub &original)
+{
+	if(original.feats != NULL)
+	{
+		int f_cnt;
+		for(f_cnt = 1; original.feats[f_cnt-1] != -1; f_cnt++);
+		feats = new int[f_cnt];
+		memcpy(feats, original.feats, sizeof(int) * f_cnt);
+	}
+	else
+	{	
+		feats = NULL;
+	}
+	accuracy = original.accuracy;
+}
+
 FeatSub::~FeatSub()
 {
 	delete[] feats;
@@ -244,8 +260,7 @@ int* BackElim::SearchHelper()
 	best.accuracy = validator->Test(f_subset[0].feats);
 	best = f_subset[0].feats;
 
-	FeatSub cur;
-	cur = best;
+	FeatSub cur = best;
 
 	std::cout << std::endl;
 

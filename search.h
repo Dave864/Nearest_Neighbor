@@ -10,6 +10,7 @@ struct FeatSub
 	double accuracy;
 
 	FeatSub(int* f = NULL, double a = 0.0);
+	FeatSub(const FeatSub &original);
 	~FeatSub();
 
 	void operator = (int *);
