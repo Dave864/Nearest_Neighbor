@@ -54,7 +54,7 @@ To remove the executable and object files type in the following command.
 		Welcome to Anthony Macpherson's Feature Selection Algorithm.
 		Type in the name of the file to test: <file_path>
 
-		Enter the path to the file you wish to test. The <file_path> label is where the name of the file path you enter will appear in the prompt.
+	Enter the path to the file you wish to test. The <file_path> label is where the name of the file path you enter will appear in the prompt.
 4) The program will prompt you to pick an algorithm
 
 		Type in the number of the algorithm you want to run.
@@ -63,11 +63,11 @@ To remove the executable and object files type in the following command.
 
 			<choice>
 
-Enter the number of the algorithm you wish to run.The number you enter will appear where the <choice> label is located. If an invalid number is entered, the following message displays
+	Enter the number of the algorithm you wish to run.The number you enter will appear where the <choice> label is located. If an invalid number is entered, the following message displays
 
 		ERROR: Invalid input. Input must be a single number with no extra spaces
 
-You will then be prompted again to pick an algorithm
+	You will then be prompted again to pick an algorithm
 5) The program executes the chosen algorithm. The program displays the steps it takes as it evaluates the data.
 
 		This dataset has <feat_num> features (not including the class attribute), with <data_count> instances.
@@ -78,7 +78,7 @@ You will then be prompted again to pick an algorithm
 		Beginning Search.
 
 			Using feature(s) {<features>} accuracy is <accuracy>
-...
+		...
 
 		<The following is repeated>>>>>>>>>>>>>>>>>>>
 		Feature set {<features>} was best, accuracy is <accuracy>
@@ -86,16 +86,16 @@ You will then be prompted again to pick an algorithm
 			Using feature(s) {<features>} accuracy is <accuracy>
 		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-Once the algorithm has finished it will display the results
+	Once the algorithm has finished it will display the results
 
 		Finished search!! The best feature subset is {<features>}, which has an accuracy of <accuracy> 
 
-The following is a description of the labels in the above code segments
-- <algorithm>: The name of the algorithm you chose
-- <features>: a list of comma seperated numbers, indicating the features being looked at
--- Example: 1, 2, 3, 5, 8
-- <accuracy>: a decimal number followed by a percent sign, indicating the accuracy value
--- Example: 0.56%
+	The following is a description of the labels in the above code segments
+	- <algorithm>: The name of the algorithm you chose
+	- <features>: a list of comma seperated numbers, indicating the features being looked at
+	-- Example: 1, 2, 3, 5, 8
+	- <accuracy>: a decimal number followed by a percent sign, indicating the accuracy value
+	-- Example: 0.56%
 
 ### Known Bugs and Errors
 The program does not do error checking to see if the test file is a valid file. 
