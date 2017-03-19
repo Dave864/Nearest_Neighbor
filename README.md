@@ -91,11 +91,11 @@ To remove the executable and object files type in the following command.
 		Finished search!! The best feature subset is {<features>}, which has an accuracy of <accuracy> 
 
 	The following is a description of the labels in the above code segments
-	- <algorithm>: The name of the algorithm you chose
-	- <features>: a list of comma seperated numbers, indicating the features being looked at
-	-- Example: 1, 2, 3, 5, 8
-	- <accuracy>: a decimal number followed by a percent sign, indicating the accuracy value
-	-- Example: 0.56%
+	- algorithm: The name of the algorithm you chose
+	- features: a list of comma seperated numbers, indicating the features being looked at
+		- Example: 1, 2, 3, 5, 8
+	- accuracy: a decimal number followed by a percent sign, indicating the accuracy value
+		- Example: 0.56%
 
 ### Known Bugs and Errors
 The program does not do error checking to see if the test file is a valid file. 
