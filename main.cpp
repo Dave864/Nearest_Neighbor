@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	while(1)
 	{
 		printf("Type the number of the algorithm you want to run.\n\n");
-		printf("\t1) Forward Selection\n\t2) Backward Selection\n\n\t");
+		printf("\t1) Forward Selection\n\t2) Backward Elimination\n\n\t");
 		std::string alg;
 		std::getline(std::cin, alg);
 		if(alg == "1")
