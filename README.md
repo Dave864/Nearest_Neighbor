@@ -1,4 +1,4 @@
-rest Neighbor
+# Nearest Neighbor
 An implementation of the nearest neighbor classification algorithm.
 
 The nearest neighbor classification algorithm is used inside two different searches.
